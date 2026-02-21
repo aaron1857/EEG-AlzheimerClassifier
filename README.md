@@ -4,3 +4,5 @@ This project, our team's senior design project, focuses on developing a machineâ
 We intend to use the following dataset:
 
 https://www.kaggle.com/datasets/codingyodha/largest-alzheimer-eeg-dataset
+
+Due to github file size limits we cannot save this file to github. Instead please download it locally to run the Jupyter Notebook
