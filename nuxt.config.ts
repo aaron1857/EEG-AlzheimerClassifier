@@ -2,6 +2,11 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   modules: ['@nuxt/ui', '@nuxtjs/color-mode'],
+  ssr: false,
+  routeRules: {
+    '/': { prerender: true },
+    '/ai': {prerender: true}
+  },
   app: {
     head: {
       title: 'Alzheimer\'s Slot Machine',
