@@ -22,4 +22,5 @@ python -m http.server 3000 -d ./.output/public/
 ```
 **NOTE:** you will need to modify the directory in the python command if you are running this in Windows since Windows does directories its own way.
 The comand *should* work for Linux and Mac OS.
+
 **NOTE:** You should run both of these commands are written assuming you run them from the root directory.
