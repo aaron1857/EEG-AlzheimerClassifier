@@ -18,7 +18,7 @@ If you have npm, but not pnpm:
 ```
 npm install -g pnpm
 ```
-If you do not have npm installed, fo;low: https://pnpm.io/installation
+If you do not have npm installed, follow: https://pnpm.io/installation
 
 
 Install packages needed to build the project:
