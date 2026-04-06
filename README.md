@@ -5,7 +5,7 @@ We intend to use the following dataset:
 
 https://www.kaggle.com/datasets/codingyodha/largest-alzheimer-eeg-dataset
 
-Due to github file size limits we cannot save this file to github. Instead please download it locally to run the Jupyter Notebook
+Due to github file size limits we cannot save this file to github. Instead we reccomend using Google Colab to run the jupyter notebook, since we haven't adapted the notebook to run locally yet.
 
 ## Running the Project
 Our project utilized Nuxt for the frontend, but we plan on having the backend written in python since that is better suited to handle the machine learning model.
@@ -23,4 +23,4 @@ python -m http.server 3000 -d ./.output/public/
 **NOTE:** you will need to modify the directory in the python command if you are running this in Windows since Windows does directories its own way.
 The comand *should* work for Linux and Mac OS.
 
-**NOTE:** You should run both of these commands are written assuming you run them from the root directory.
+**NOTE:** Both of these commands are written assuming you run them from the root directory of the project.
