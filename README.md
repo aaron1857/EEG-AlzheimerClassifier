@@ -13,11 +13,12 @@ Our project utilized Nuxt for the frontend, but we plan on having the backend wr
 Since we currently do not have a backend, the best way to test it is by building it with pnpm, and then serving the built files with python. Eventually we will make a proper main.py instead of launching a python http server.
 
 Installing pnpm:
+
 If you have npm, but not pnpm:
 ```
 npm install -g pnpm
 ```
-If you do not have npm installed, folow: https://pnpm.io/installation
+If you do not have npm installed, fo;low: https://pnpm.io/installation
 
 
 Install packages needed to build the project:
@@ -32,7 +33,7 @@ Running the project:
 ```
 python -m http.server 3000 -d ./.output/public/
 ```
-From here, you can the it on port 3000 on your browser using this link: http://localhost:3000
+From here, you can the access it on port 3000 on your computer using this link: http://localhost:3000
 
 
 **NOTE:** You will need to modify the directory in the python command if you are running this in Windows since Windows does directories its own way.
