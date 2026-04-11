@@ -7,9 +7,11 @@
                 collapsed
                 orientation="horizontal"
                 :items="items"
+                highlight-color="primary"
                 :ui="{
-                link: 'flex-col gap-1',
-                linkLabel: 'block text-center'
+                link: 'flex-col gap-2 text-white',
+                linkLabel: 'block text-center text-white',
+                linkLeadingIcon: 'text-white',
                 }"
             />
         </div>
