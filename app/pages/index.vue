@@ -1,3 +1,6 @@
 <template>
-    <SMHero/>
+
 </template>
+<script setup lang="ts">
+    navigateTo("/ai")
+</script>

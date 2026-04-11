@@ -24,11 +24,6 @@ const isMenuOpen = false;
 
 const items = ref<NavigationMenuItem[]>([
   {
-    label: 'Home',
-    icon: 'i-lucide-house',
-    to: '/',
-  },
-  {
     label: 'Analyze',
     icon: 'i-lucide-brain',
     to: '/ai',
@@ -36,7 +31,7 @@ const items = ref<NavigationMenuItem[]>([
   {
     label: 'Manual',
     icon: 'i-lucide-file-question-mark',
-    to: 'https://fegelsamuel.github.io',
+    to: '/manual',
   },
 ])
 </script>
