@@ -2,7 +2,7 @@
 
 <template>
     <div class="h-full">
-        <div class="z-50 sticky bottom-0 w-full flex flex-row justify-center bg-primary text-white"> 
+        <div class="z-50 fixed bottom-0 w-full flex flex-row justify-center bg-primary text-white"> 
             <UNavigationMenu
                 collapsed
                 orientation="horizontal"
