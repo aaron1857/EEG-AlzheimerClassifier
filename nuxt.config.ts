@@ -9,7 +9,7 @@ export default defineNuxtConfig({
   },
   app: {
     head: {
-      title: 'Alzheimer\'s Slot Machine',
+      title: 'Wavethinker',
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -20,10 +20,7 @@ export default defineNuxtConfig({
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
       ]
     },
-    pageTransition: {
-      name: 'page',
-      mode: 'out-in'
-    }
+
   },
   css: ['~/assets/css/main.css'],
   devtools: { enabled: true }
