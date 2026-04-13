@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
-  modules: ['@nuxt/ui'],
+  modules: ['@nuxt/ui', '@nuxtjs/color-mode'],
   ssr: false,
   routeRules: {
     '/': { prerender: true },
@@ -22,5 +22,5 @@ export default defineNuxtConfig({
     },
   },
   css: ['~/assets/css/main.css'],
-  devtools: { enabled: false }
+  devtools: { enabled: true }
 })

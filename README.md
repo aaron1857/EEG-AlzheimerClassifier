@@ -40,3 +40,22 @@ From here, you can the access it on port 3000 on your computer using this link: 
 The comand *should* work for Linux and Mac OS.
 
 **NOTE:** Both of these commands are written assuming you run them from the root directory of the project.
+
+## Building the project
+Run all steps up to and including `pnpm build` above.
+
+
+Afterwards, run
+```
+pnpm make
+```
+*Note*: It will take a while for this command to run.
+This should make a desktop app for your OS.
+For linux
+- It creates an appimage
+For MacOS
+- It creates dmg executable
+For Windows
+- It should make an exe
+
+This will be in the "out" folder of the project, click on the folder with your OS name. Finally go through the folders until you see the executable for your OS.

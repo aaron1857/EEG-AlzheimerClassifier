@@ -4,23 +4,10 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import fs from 'node:fs';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const filename = fileURLToPath(import.meta.url);
+const dirname = path.dirname(filename);
 
-const stripLocales = async () => {
-  const resourcesPath = path.join(__dirname, 'out', 'Wavethinker-linux-x64', 'resources');
-  const localesPath = path.join(resourcesPath, 'locales');
-  
-  if (fs.existsSync(localesPath)) {
-    const files = fs.readdirSync(localesPath);
-    for (const file of files) {
-      if (file !== 'en-US.pak') {
-        fs.unlinkSync(path.join(localesPath, file));
-        console.log(`Removed locale: ${file}`);
-      }
-    }
-  }
-};
+
 
 export default {
   packagerConfig: {
@@ -28,7 +15,7 @@ export default {
       unpack: '.output/**/*'
     },
     extraResource: [
-      path.join(__dirname, '.output')
+      path.join(dirname, '.output')
     ],
     name: 'Wavethinker',
     executableName: 'Wavethinker',
@@ -47,11 +34,6 @@ export default {
       /^\/dist$/,
       /^\/public$/,
     ]
-  },
-  hooks: {
-    postPackage: async () => {
-      await stripLocales();
-    }
   },
   rebuildConfig: {},
   makers: [
