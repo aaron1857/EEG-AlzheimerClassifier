@@ -8,25 +8,42 @@ const __dirname = path.dirname(__filename);
 
 export default {
   packagerConfig: {
-    asar: true,
+    asar: {
+      unpack: '.output/**/*'
+    },
     extraResource: [
-      path.join(__dirname, '.output'),
-    ]
+      path.join(__dirname, '.output')
+    ],
+    name: 'Wavethinker',
+    executableName: 'Wavethinker'
   },
   rebuildConfig: {},
   makers: [
     {
       name: '@electron-forge/maker-squirrel',
       platforms: ['win32'],
+      config: {
+        changelog: 'Initial release',
+      },
+    },
+    {
+      name: '@electron-forge/maker-dmg',
+      platforms: ['darwin'],
       config: {},
+    },
+    {
+      name: '@reforged/maker-appimage',
+      platforms: ['linux'],
+      config: {
+        options: {
+          name: 'Wavethinker',
+          bin: 'Wavethinker'
+        }
+      },
     },
     {
       name: '@electron-forge/maker-zip',
-      platforms: ['darwin'],
-    },
-    {
-      name: '@electron-forge/maker-rpm',
-      config: {},
+      platforms: ['linux', 'darwin', 'win32'],
     },
   ],
   plugins: [
@@ -40,8 +57,8 @@ export default {
       [FuseV1Options.EnableCookieEncryption]: true,
       [FuseV1Options.EnableNodeOptionsEnvironmentVariable]: false,
       [FuseV1Options.EnableNodeCliInspectArguments]: false,
-      [FuseV1Options.EnableEmbeddedAsarIntegrityValidation]: true,
-      [FuseV1Options.OnlyLoadAppFromAsar]: true,
+      [FuseV1Options.EnableEmbeddedAsarIntegrityValidation]: false,
+      [FuseV1Options.OnlyLoadAppFromAsar]: false,
     }),
   ],
 };

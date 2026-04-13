@@ -1,11 +1,11 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
-  modules: ['@nuxt/ui', '@nuxtjs/color-mode'],
+  modules: ['@nuxt/ui'],
   ssr: false,
   routeRules: {
     '/': { prerender: true },
-    '/ai': {prerender: true}
+    '/ai': { prerender: true }
   },
   app: {
     head: {
@@ -17,11 +17,10 @@ export default defineNuxtConfig({
         { name: 'format-detection', content: 'telephone=no' }
       ],
       link: [
-        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+        { rel: 'icon', type: 'image/x-icon', href: './favicon.ico' }
       ]
     },
-
   },
   css: ['~/assets/css/main.css'],
-  devtools: { enabled: true }
+  devtools: { enabled: false }
 })
