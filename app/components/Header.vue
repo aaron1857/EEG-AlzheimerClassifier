@@ -25,7 +25,7 @@
                 </span>
             </SMbutton>
             <NuxtLink to="/">Home</NuxtLink>
-            <NuxtLink to="/ai">Roll the Slots</NuxtLink>
+            <NuxtLink to="/ai">Upload EEG Data</NuxtLink>
             <a href="https://fegelsamuel.github.io">About Us</a> <!-- todo: replace with team -->
         </div>
         
