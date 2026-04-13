@@ -13,7 +13,7 @@
                         </h2>
                     </template>
                     <div class="space-y-3">
-                        <p>Wavethinker is an Machine Learning powered tool that analyzes EEG data to detect patterns associated with Alzheimer's Disease.</p>
+                        <p>Wavethinker is a Machine Learning powered tool that analyzes EEG data to detect patterns associated with Alzheimer's Disease.</p>
                         <p>The system uses machine learning to examine brain wave signals and provide a classification result along with a confidence score.</p>
                     </div>
                 </UCard>
