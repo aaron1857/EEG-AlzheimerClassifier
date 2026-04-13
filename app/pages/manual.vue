@@ -1,6 +1,6 @@
 <template>
     <div class="font-secondary">
-        <div class="max-w-4xl mx-auto py-10 px-6">
+        <div class="mx-auto py-10 px-6 h-[calc(100dvh-6rem)] overflow-y-auto">
             <h1 class="text-4xl font-bold text-center mb-2">Wavethinker User Manual</h1>
             <p class="text-center text-lg opacity-70 mb-10">Complete guide to using Wavethinker for EEG-based Alzheimer's detection</p>
 
