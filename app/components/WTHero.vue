@@ -10,8 +10,7 @@
 
     <!-- Washed overlay -->
     <div class="absolute inset-0 -z-10 bg-slate-900/70 dark:bg-slate-900/70 light:bg-slate-100/70 backdrop-blur-[2px]" />
-     <!-- <div class="absolute inset-0 -z-10" /> -->
-
+    
     <!-- Content -->
     <div class="mx-10 max-w-7xl px-6 py-32 sm:py-40 lg:px-8">
         <p class="text-sm font-semibold font-secondary uppercase tracking-[0.3em] text-primary">
