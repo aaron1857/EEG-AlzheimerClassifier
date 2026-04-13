@@ -1,23 +1,41 @@
 {
-  "name": "Hackathon-2026",
+  "name": "Wavethinker",
+  "author": "email101@duck.com",
+  "description": "EEG Analysis Application",
+  "main": "./main.js",
   "type": "module",
   "private": true,
+  "license": "MIT",
+  "version": "2026-4-13",
   "scripts": {
-    "build": "nuxt build",
+    "build": "nuxt generate",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
   },
   "dependencies": {
     "@nuxt/eslint": "1.15.1",
     "@nuxt/ui": "4.4.0",
+    "electron-squirrel-startup": "^1.0.1",
     "nuxt": "^4.3.1",
     "tailwindcss": "^4.2.0",
     "vue": "^3.5.28",
     "vue-router": "^4.6.4"
   },
   "devDependencies": {
-    "@nuxtjs/color-mode": "^4.0.0"
+    "@electron-forge/cli": "^7.11.1",
+    "@electron-forge/maker-deb": "^7.11.1",
+    "@electron-forge/maker-rpm": "^7.11.1",
+    "@electron-forge/maker-squirrel": "^7.11.1",
+    "@electron-forge/maker-zip": "^7.11.1",
+    "@electron-forge/plugin-auto-unpack-natives": "^7.11.1",
+    "@electron-forge/plugin-fuses": "^7.11.1",
+    "@electron/fuses": "^1.8.0",
+    "@nuxtjs/color-mode": "^4.0.0",
+    "electron": "^41.2.0"
   }
 }
