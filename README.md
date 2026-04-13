@@ -42,7 +42,7 @@ The comand *should* work for Linux and Mac OS.
 **NOTE:** Both of these commands are written assuming you run them from the root directory of the project.
 
 ## Building the project
-Run all steps up to and including `pnpm build` above.
+**Run all steps up to and including `pnpm build` above.**
 
 
 Afterwards, run
