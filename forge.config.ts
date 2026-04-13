@@ -38,10 +38,11 @@ export default {
   rebuildConfig: {},
   makers: [
     {
-      name: '@electron-forge/maker-squirrel',
+      name: '@electron-forge/maker-wix',
       platforms: ['win32'],
       config: {
-        changelog: 'Initial release',
+        exe: "Wavethinker",
+        name: "Wavethinker"
       },
     },
     {
