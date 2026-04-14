@@ -50,11 +50,6 @@ export default {
   ],
   makers: [
     {
-      name: '@electron-forge/maker-dmg',
-      platforms: ['darwin'],
-      config: {},
-    },
-    {
       name: '@reforged/maker-appimage',
       platforms: ['linux'],
       config: {

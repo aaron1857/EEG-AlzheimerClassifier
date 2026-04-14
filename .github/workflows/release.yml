@@ -44,6 +44,7 @@ jobs:
         run: pnpm run make
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CI: true
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
