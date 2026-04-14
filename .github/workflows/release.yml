@@ -1,0 +1,52 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - '20*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    strategy:
+      matrix:
+        include:
+          - platform: linux
+            arch: x64
+          - platform: darwin
+            arch: x64
+          - platform: darwin
+            arch: arm64
+          - platform: win32
+            arch: x64
+    runs-on: ${{ matrix.platform == 'win32' && 'windows-latest' || (matrix.platform == 'darwin' && 'macos-latest') || 'ubuntu-latest' }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build and Package
+        run: pnpm run make
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.platform }}-${{ matrix.arch }}
+          path: out/make/**/*
