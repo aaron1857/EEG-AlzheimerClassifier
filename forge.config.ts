@@ -36,6 +36,18 @@ export default {
     ]
   },
   rebuildConfig: {},
+  publishers: [
+    {
+      name: '@electron-forge/publisher-github',
+      config: {
+        repository: {
+          owner: 'aaron1857',
+          name: 'EEG-AlzheimerClassifier'
+        },
+        prerelease: true
+      }
+    }
+  ],
   makers: [
     {
       name: '@electron-forge/maker-dmg',
