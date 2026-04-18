@@ -2,6 +2,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { spawn } from 'child_process';
 import fs from 'fs';
+import http from 'http';
 
 import { app, BrowserWindow, protocol } from 'electron'
 
@@ -18,37 +19,72 @@ console.log('Public path:', publicPath);
 console.log('Is packaged:', isPackaged);
 console.log('File exists:', fs.existsSync(path.join(publicPath, 'index.html')));
 
-function createWindow() {
+// This function is only for the dev enviroment
+// It keeps checking if the server is up every one second.
+// It resolves once it confirms the server is up
+function waitForServer(maxAttempts = 300) {
+    return new Promise((resolve, reject) => {
+        let attempt = 0;
+        const check = () => {
+            attempt++;
+            console.log(`Checking server... attempt ${attempt}`);
+            const req = http.get('http://localhost:3000', (res) => {
+                console.log(`Server responded: ${res.statusCode}`);
+                if (res.statusCode >= 200 && res.statusCode < 400) {
+                    resolve();
+                } else if (attempt >= maxAttempts) {
+                    reject(new Error('Server failed to start'));
+                } else {
+                    setTimeout(check, 1000);
+                }
+            });
+            req.on('error', (e) => {
+                console.log(`Server check error: ${e.message}`);
+                if (attempt >= maxAttempts) {
+                    reject(new Error('Server failed to start'));
+                } else {
+                    setTimeout(check, 1000);
+                }
+            });
+        };
+        check();
+    });
+}
+
+async function createWindow() {
 
     const mainWindow = new BrowserWindow({
-
         width: 1000,
-
         height: 600,
-
         webPreferences: {
             nodeIntegration: false,
-
             contextIsolation: false,
-
             webSecurity: false,
         },
     });
     // Make a dev server to run it in dev mode. Makes development MUCH easier
     if (isPackaged) {
         mainWindow.loadURL('file:///');
+        mainWindow.maximize();
     } else {
         nuxtProcess = spawn('pnpm', ['nuxt', 'dev'], {
             detached: true,
             stdio: 'inherit',
             shell: true
         });
-        mainWindow.loadURL('http://localhost:3000');
+        try {
+            mainWindow.maximize();
+            await waitForServer();
+            mainWindow.loadURL('http://localhost:3000');
+            mainWindow.maximize();
+        } catch (e) {
+            console.error('Server wait failed:', e.message);
+        }
     }
 }
 
 // Creates the window when electron app is ready
-app.whenReady().then(() => {
+app.whenReady().then(async () => {
     if (isPackaged) {
         // We are doing some link interception BS since nuxt likes making its path start at root.
         // This cannot work with file links, since it starts trying to fetch with from the root directory
@@ -73,7 +109,7 @@ app.whenReady().then(() => {
         });
     }
     
-    createWindow()
+    await createWindow()
 
     app.on('activate', () => {
         if (BrowserWindow.getAllWindows().length === 0) {

@@ -23,17 +23,13 @@ If you do not have npm installed, follow: https://pnpm.io/installation
 
 Install packages needed to build the project:
 ```
-pnpm i
-```
-Building the project:
-```
-pnpm build
+pnpm install
 ```
 Running the project:
 ```
-python -m http.server 3000 -d ./.output/public/
+pnpm start
 ```
-From here, you can the access it on port 3000 on your computer using this link: http://localhost:3000
+From here, a window should open up with the project
 
 
 **NOTE:** You will need to modify the directory in the python command if you are running this in Windows since Windows does directories its own way.
@@ -42,7 +38,7 @@ The comand *should* work for Linux and Mac OS.
 **NOTE:** Both of these commands are written assuming you run them from the root directory of the project.
 
 ## Building the project
-**Run all steps up to and including `pnpm build` above.**
+**Make sure you run pnpm i above**
 
 
 Afterwards, run
@@ -52,10 +48,8 @@ pnpm make
 *Note*: It will take a while for this command to run.
 This should make a desktop app for your OS.
 For linux
-- It creates an appimage
-For MacOS
-- It creates dmg executable
-For Windows
-- It should make an exe
+- It creates an appimage as well as a zip file with the build in it.
+For MacOS and Windows
+- It create a zip folder with the build inside it.
 
 This will be in the "out" folder of the project, click on the folder with your OS name. Finally go through the folders until you see the executable for your OS.
