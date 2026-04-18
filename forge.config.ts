@@ -17,6 +17,9 @@ export default {
     extraResource: [
       path.join(dirname, '.output')
     ],
+    extraFiles: [
+      path.join(dirname, 'run-on-mac.sh')
+    ],
     name: 'Wavethinker',
     executableName: 'Wavethinker',
     ignore: [
