@@ -1,8 +1,8 @@
 <!-- burg -->
 
 <template>
-    <div class="h-full">
-        <div @mouseleave="hoverleave()" @mouseenter="hoverenter()" class="z-50 fixed bottom-0 w-full flex flex-col justify-center items-center text-white"
+  <div class="h-full w-full">
+        <div @mouseleave="hoverleave()" @mouseenter="hoverenter()" @click="isMenuOpen = !isMenuOpen" class="z-50 w-full flex flex-col justify-center items-center text-white"
           :class="{
             'footer-leave-active': !isMenuOpen,
             'footer-leave-to': !isMenuOpen,
@@ -28,10 +28,9 @@
                 linkLeadingIcon: 'text-white',
                 }"
             />
-          </div>
-            
+          </div>   
         </div>
-    </div>
+      </div>
 </template>
 
 <script setup lang="ts">
