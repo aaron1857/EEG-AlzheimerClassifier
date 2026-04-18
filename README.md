@@ -31,15 +31,10 @@ pnpm start
 ```
 From here, a window should open up with the project
 
-
-**NOTE:** You will need to modify the directory in the python command if you are running this in Windows since Windows does directories its own way.
-The comand *should* work for Linux and Mac OS.
-
 **NOTE:** Both of these commands are written assuming you run them from the root directory of the project.
 
 ## Building the project
 **Make sure you run pnpm i above**
-
 
 Afterwards, run
 ```
