@@ -44,7 +44,7 @@ export default {
           owner: 'aaron1857',
           name: 'EEG-AlzheimerClassifier'
         },
-        prerelease: true
+        prerelease: false
       }
     }
   ],
