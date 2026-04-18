@@ -16,7 +16,7 @@
     "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "nuxt generate && electron-forge make",
-    "publish": "electron-forge publish"
+    "publish": "electron-forge publish --targets @electron-forge/publisher-github"
   },
   "dependencies": {
     "@nuxt/eslint": "1.15.1",
