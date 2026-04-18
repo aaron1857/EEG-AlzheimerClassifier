@@ -51,19 +51,27 @@ jobs:
         with:
           name: ${{ matrix.platform }}-${{ matrix.arch }}
           path: out/make/**/*
-publish:
-  needs: release
-  runs-on: ubuntu-latest
-  steps:
-    - uses: actions/checkout@v4
-    - uses: pnpm/action-setup@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: 22
-    - run: pnpm install --frozen-lockfile
-    - run: pnpm run make
-      env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - run: pnpm run publish
-      env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  publish:
+    needs: release
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Publish to GitHub
+        run: pnpm run publish
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
