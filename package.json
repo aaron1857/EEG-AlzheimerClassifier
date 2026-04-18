@@ -15,7 +15,8 @@
     "postinstall": "nuxt prepare",
     "start": "electron-forge start",
     "package": "electron-forge package",
-    "make": "nuxt generate && electron-forge make"
+    "make": "nuxt generate && electron-forge make",
+    "publish": "electron-forge publish"
   },
   "dependencies": {
     "@nuxt/eslint": "1.15.1",
