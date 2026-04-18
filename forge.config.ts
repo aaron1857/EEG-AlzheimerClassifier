@@ -17,9 +17,6 @@ export default {
     extraResource: [
       path.join(dirname, '.output')
     ],
-    extraFiles: [
-      path.join(dirname, 'run-on-mac.sh')
-    ],
     name: 'Wavethinker',
     executableName: 'Wavethinker',
     ignore: [
@@ -37,6 +34,13 @@ export default {
       /^\/dist$/,
       /^\/public$/,
     ]
+  },
+  hooks: {
+    postPackage: async (config, packageResult) => {
+      const src = path.join(dirname, 'run-on-mac.sh');
+      const dest = path.join(packageResult.outputPaths[0], 'run-on-mac.sh');
+      fs.copyFileSync(src, dest);
+    },
   },
   rebuildConfig: {},
   publishers: [
