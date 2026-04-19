@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   ssr: false,
   routeRules: {
     '/': { prerender: true },
-    '/ai': {prerender: true}
+    '/ai': { prerender: true }
   },
   app: {
     head: {
@@ -17,11 +17,10 @@ export default defineNuxtConfig({
         { name: 'format-detection', content: 'telephone=no' }
       ],
       link: [
-        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+        { rel: 'icon', type: 'image/x-icon', href: './favicon.ico' }
       ]
     },
-
   },
   css: ['~/assets/css/main.css'],
-  devtools: { enabled: true }
+  devtools: { enabled: false }
 })
