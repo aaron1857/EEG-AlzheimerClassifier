@@ -36,19 +36,19 @@ export default {
     ]
   },
   rebuildConfig: {},
-  makers: [
+  publishers: [
     {
-      name: '@electron-forge/maker-squirrel',
-      platforms: ['win32'],
+      name: '@electron-forge/publisher-github',
       config: {
-        changelog: 'Initial release',
-      },
-    },
-    {
-      name: '@electron-forge/maker-dmg',
-      platforms: ['darwin'],
-      config: {},
-    },
+        repository: {
+          owner: 'aaron1857',
+          name: 'EEG-AlzheimerClassifier'
+        },
+        prerelease: true
+      }
+    }
+  ],
+  makers: [
     {
       name: '@reforged/maker-appimage',
       platforms: ['linux'],

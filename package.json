@@ -6,7 +6,7 @@
   "type": "module",
   "private": true,
   "license": "MIT",
-  "version": "2026.4.13",
+  "version": "2026.4.14",
   "scripts": {
     "build": "nuxt generate",
     "dev": "nuxt dev",
@@ -15,7 +15,7 @@
     "postinstall": "nuxt prepare",
     "start": "electron-forge start",
     "package": "electron-forge package",
-    "make": "electron-forge make"
+    "make": "nuxt generate && electron-forge make"
   },
   "dependencies": {
     "@nuxt/eslint": "1.15.1",
@@ -31,10 +31,10 @@
   "devDependencies": {
     "@electron-forge/cli": "^7.11.1",
     "@electron-forge/maker-dmg": "^7.11.1",
-    "@electron-forge/maker-squirrel": "^7.11.1",
     "@electron-forge/maker-zip": "^7.11.1",
     "@electron-forge/plugin-auto-unpack-natives": "^7.11.1",
     "@electron-forge/plugin-fuses": "^7.11.1",
+    "@electron-forge/publisher-github": "^7.11.1",
     "@electron/fuses": "^1.8.0",
     "@nuxtjs/color-mode": "^4.0.0",
     "@reforged/maker-appimage": "^5.2.0",

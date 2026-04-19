@@ -1,6 +1,6 @@
 <template>
     <div class="font-secondary">
-        <div class="mx-auto py-10 px-6 h-[calc(100dvh-6rem)] overflow-y-auto">
+        <div class="mx-auto py-10 px-6 overflow-y-auto">
             <h1 class="text-4xl font-bold text-center mb-2">Wavethinker User Manual</h1>
             <p class="text-center text-lg opacity-70 mb-10">Complete guide to using Wavethinker for EEG-based Alzheimer's detection</p>
 
@@ -13,7 +13,7 @@
                         </h2>
                     </template>
                     <div class="space-y-3">
-                        <p>Wavethinker is an Machine Learning powered tool that analyzes EEG data to detect patterns associated with Alzheimer's Disease.</p>
+                        <p>Wavethinker is a Machine Learning powered tool that analyzes EEG data to detect patterns associated with Alzheimer's Disease.</p>
                         <p>The system uses machine learning to examine brain wave signals and provide a classification result along with a confidence score.</p>
                     </div>
                 </UCard>
