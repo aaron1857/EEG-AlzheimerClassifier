@@ -43,15 +43,40 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue"
+import * as ort from 'onnxruntime-web'
+import * as Papa from 'papaparse'
+
+ort.env.wasm.wasmPaths = 'https://cdn.jsdelivr.net/npm/onnxruntime-web@1.24.3/dist/'
 
 const max_file_size = 20 * 1024 * 1024
 const states = ['upload', 'processing', 'results']
 const currState = ref(0)
 const selectedFile = ref<File | null>(null)
+const modelLoad = ref<Promise<ort.InferenceSession | undefined> | null>(null)
+const model = ref<ort.InferenceSession | undefined | null>(null)
+const dataLoad = ref<Promise<void> | null>(null)
+const data = ref<ort.Tensor>(new ort.Tensor('float32', [], [0]))
+
+const loadModel = async () => {
+    try {
+        // Load model from a URL or relative path
+        const session = await ort.InferenceSession.create('./models/tcn_model.onnx', {
+            executionProviders: ['wasm'], // Options: 'wasm', 'webgl', 'webgpu'
+            externalData: [{ path: "tcn_model.onnx.data", data: "./models/tcn_model.onnx.data" }]
+        });
+        console.log('Model loaded successfully');
+        return session;
+    } catch (e) {
+        console.error(`Failed to load model: ${e}`);
+    }
+}
 
 
-const submitCSV = () => {
+onMounted(async () => {
+    modelLoad.value = loadModel()
+})
+
+const submitCSV = async () => {
     // validity checks
     if (selectedFile.value == null) {
         alert("Please upload a file.")
@@ -62,19 +87,37 @@ const submitCSV = () => {
         return;
     }
 
+    dataLoad.value = new Promise<void>((resolve, reject) => {
+        Papa.parse(selectedFile.value, {
+            dynamicTyping: true, // Automatically converts numbers/booleans
+            complete: function(results: Papa.ParseResult<[]>) {
+                results.data.pop() //  Last element will always be null
+                const processed = new Float32Array(results.data.flat())
+                data.value = new ort.Tensor('float32', processed, [1,19,128])
+                console.log("Finished:", processed);
+                resolve()
+            },
+            error: function(err) {
+                console.error("Error parsing file:", err.message);
+                reject()
+            }
+    })})
     // give file to model
+
 
     // next step
     currState.value++;
-    calculateData()
+    await calculateData()
 }
 
-const calculateData = () => {
-    const balls = ref(true)
-  //simulate a 1 sec wait/buffer before data is ready to present
-  setTimeout(() => {
-    currState.value++;
-  }, 2500)
+const calculateData = async () => {
+  model.value = await modelLoad.value
+  await dataLoad.value
+  console.log(model.value?.inputMetadata)
+  console.log(data.value.size)
+  const results = await model.value?.run({ input: data.value })
+  console.log("Inference result:", results);
+  currState.value++
 
 }
 
