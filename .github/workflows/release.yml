@@ -73,11 +73,7 @@ jobs:
           # Create release
           gh release create "$TAG_NAME" --title "Wavethinker $TAG_NAME" --generate-notes
           
-          # Upload all artifacts
-          for dir in artifacts/*; do
-            for file in "$dir"/*; do
-              if [ -f "$file" ]; then
-                gh release upload "$TAG_NAME" "$file" --clobber
-              fi
-            done
+          # Upload all artifacts (find recursively)
+          for file in $(find artifacts -type f); do
+            gh release upload "$TAG_NAME" "$file" --clobber
           done
