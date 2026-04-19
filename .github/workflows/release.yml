@@ -40,10 +40,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build, Package and Publish
-        run: pnpm run make && pnpm run publish
+      - name: Build and Package
+        run: pnpm run make
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CI: true
 
       - name: Upload artifacts
@@ -51,3 +50,33 @@ jobs:
         with:
           name: ${{ matrix.platform }}-${{ matrix.arch }}
           path: out/make/**/*
+
+  create-release:
+    needs: release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Create Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG_NAME="${GITHUB_REF#refs/tags/}"
+          
+          # Create release
+          gh release create "$TAG_NAME" --title "Wavethinker $TAG_NAME" --generate-notes
+          
+          # Upload all artifacts
+          for dir in artifacts/*; do
+            for file in "$dir"/*; do
+              if [ -f "$file" ]; then
+                gh release upload "$TAG_NAME" "$file" --clobber
+              fi
+            done
+          done
