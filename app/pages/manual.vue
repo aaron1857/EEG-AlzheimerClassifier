@@ -13,7 +13,7 @@
                         </h2>
                     </template>
                     <div class="space-y-3">
-                        <p>Wavethinker is a Machine Learning powered tool that analyzes EEG data to detect patterns associated with Alzheimer's Disease.</p>
+                        <p>Wavethinker is an open-source Machine Learning-powered tool that analyzes EEG data to detect patterns associated with Alzheimer's Disease.</p>
                         <p>The system uses machine learning to examine brain wave signals and provide a classification result along with a confidence score.</p>
                     </div>
                 </UCard>
@@ -62,7 +62,7 @@
                         <UTable :data="fileRequirements" :columns="fileColumns" />
                         <UAlert color="warning" variant="subtle" icon="i-heroicons-exclamation-triangle">
                             <template #title>Important</template>
-                            <template #description>Ensure your CSV file follows the standard EEG format with channels as columns and time points as rows.</template>
+                            <template #description>Ensure your CSV file follows the standard EEG format with electrode channels as columns and time points as rows.</template>
                         </UAlert>
                     </div>
                 </UCard>
@@ -134,7 +134,7 @@ const fileRequirements = [
 const faqs = [
     {
         label: 'What EEG format is supported?',
-        content: 'We support standard CSV format with electrode channels as columns and time-series data points as rows. Common EEG software exports (e.g., from EEGLAB, BrainVision) are compatible.',
+        content: 'We support standard CSV format with electrode channels as columns and time-series data points as rows.',
         icon: 'i-heroicons-chevron-down'
     },
     {
