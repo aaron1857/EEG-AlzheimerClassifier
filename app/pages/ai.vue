@@ -45,7 +45,12 @@
 <script setup lang="ts">
 import { ref } from "vue"
 
-const max_file_size = 20 * 1024 * 1024
+const kilobyteSize = 1024
+const megabyteSize = 1024 * kilobyteSize
+const max_file_size = 20 * megabyteSize;
+
+
+
 const states = ['upload', 'processing', 'results']
 const currState = ref(0)
 const selectedFile = ref<File | null>(null)
@@ -61,7 +66,6 @@ const submitCSV = () => {
         alert("File too large. Please upload a smaller file.")
         return;
     }
-
     // give file to model
 
     // next step
