@@ -48,7 +48,12 @@ import * as Papa from 'papaparse'
 
 ort.env.wasm.wasmPaths = 'https://cdn.jsdelivr.net/npm/onnxruntime-web@1.24.3/dist/'
 
-const max_file_size = 20 * 1024 * 1024
+const kilobyteSize = 1024
+const megabyteSize = 1024 * kilobyteSize
+const max_file_size = 20 * megabyteSize;
+
+
+
 const states = ['upload', 'processing', 'results']
 const currState = ref(0)
 const selectedFile = ref<File | null>(null)
