@@ -54,6 +54,7 @@ function waitForServer(maxAttempts = 300) {
 async function createWindow() {
 
     const mainWindow = new BrowserWindow({
+        icon: './public/favicon.png',
         width: 1000,
         height: 600,
         webPreferences: {

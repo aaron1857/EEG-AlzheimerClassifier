@@ -11,6 +11,7 @@ const dirname = path.dirname(filename);
 
 export default {
   packagerConfig: {
+    icon: "./public/favicon",
     asar: {
       unpack: '.output/**/*'
     },
@@ -55,7 +56,8 @@ export default {
       config: {
         options: {
           name: 'Wavethinker',
-          bin: 'Wavethinker'
+          bin: 'Wavethinker',
+          icon: './public/favicon.png'
         }
       },
     },
