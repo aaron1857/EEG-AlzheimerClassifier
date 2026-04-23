@@ -17,10 +17,12 @@ jobs:
           - platform: linux
             arch: x64
           - platform: darwin
-            arch: x64
-          - platform: darwin
             arch: arm64
           - platform: win32
+            arch: x64
+          - platform: win32
+            arch: amr64
+          - platform: linux
             arch: x64
     runs-on: ${{ matrix.platform == 'win32' && 'windows-latest' || (matrix.platform == 'darwin' && 'macos-latest') || 'ubuntu-latest' }}
 
