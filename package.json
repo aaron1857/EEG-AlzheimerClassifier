@@ -22,9 +22,11 @@
     "@nuxt/eslint": "1.15.1",
     "@nuxt/ui": "4.4.0",
     "electron-squirrel-startup": "^1.0.1",
-    "nuxt": "^4.4.2",
-    "tailwindcss": "^4.2.2",
-    "vue": "^3.5.32",
+    "nuxt": "^4.3.1",
+    "onnxruntime-web": "^1.24.3",
+    "papaparse": "^5.5.3",
+    "tailwindcss": "^4.2.0",
+    "vue": "^3.5.28",
     "vue-router": "^4.6.4"
   },
   "devDependencies": {
@@ -37,6 +39,7 @@
     "@electron/fuses": "^1.8.0",
     "@nuxtjs/color-mode": "^4.0.0",
     "@reforged/maker-appimage": "^5.2.0",
-    "electron": "^41.2.1"
+    "@types/papaparse": "^5.5.2",
+    "electron": "^41.2.0"
   }
 }
