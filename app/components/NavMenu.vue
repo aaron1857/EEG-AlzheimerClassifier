@@ -1,7 +1,7 @@
 <!-- burg -->
 
 <template>
-  <div class="h-full w-full">
+  <div class="w-full">
         <div class="z-50 w-full flex flex-col justify-center items-center text-white"
           :class="{
             'footer-leave-active': !isMenuOpen,
