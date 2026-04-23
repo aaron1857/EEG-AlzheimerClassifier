@@ -23,7 +23,7 @@ jobs:
           - platform: win32
             arch: amr64
           - platform: linux
-            arch: x64
+            arch: arm64
     runs-on: ${{ matrix.platform == 'win32' && 'windows-latest' || (matrix.platform == 'darwin' && 'macos-latest') || 'ubuntu-latest' }}
 
     steps:
