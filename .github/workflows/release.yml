@@ -17,10 +17,12 @@ jobs:
           - platform: linux
             arch: x64
           - platform: darwin
-            arch: x64
-          - platform: darwin
             arch: arm64
           - platform: win32
+            arch: x64
+          - platform: win32
+            arch: amr64
+          - platform: linux
             arch: x64
     runs-on: ${{ matrix.platform == 'win32' && 'windows-latest' || (matrix.platform == 'darwin' && 'macos-latest') || 'ubuntu-latest' }}
 
@@ -43,7 +45,6 @@ jobs:
       - name: Build and Package
         run: pnpm run make
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CI: true
 
       - name: Upload artifacts
@@ -51,3 +52,30 @@ jobs:
         with:
           name: ${{ matrix.platform }}-${{ matrix.arch }}
           path: out/make/**/*
+
+  create-release:
+    needs: release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Create Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG_NAME: ${{ github.ref_name }}
+        run: |
+          # Create release
+          gh release create "$TAG_NAME" --title "Wavethinker $TAG_NAME" --generate-notes
+          
+          # Upload all artifacts (find recursively)
+          for file in $(find artifacts -type f); do
+            gh release upload "$TAG_NAME" "$file" --clobber
+          done

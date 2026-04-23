@@ -4,7 +4,7 @@ import { spawn } from 'child_process';
 import fs from 'fs';
 import http from 'http';
 
-import { app, BrowserWindow, protocol } from 'electron'
+import { app, BrowserWindow, protocol, Menu } from 'electron'
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -54,6 +54,7 @@ function waitForServer(maxAttempts = 300) {
 async function createWindow() {
 
     const mainWindow = new BrowserWindow({
+        icon: './public/favicon.png',
         width: 1000,
         height: 600,
         webPreferences: {
@@ -110,6 +111,56 @@ app.whenReady().then(async () => {
     }
     
     await createWindow()
+
+    const menuTemplate = [
+        {
+            label: 'View',
+            submenu: [
+                {
+                    label: 'Zoom In',
+                    accelerator: 'CmdOrCtrl+=',
+                    click: () => {
+                        const win = BrowserWindow.getFocusedWindow();
+                        if (win) {
+                            const webContents = win.webContents;
+                            const newZoomFactor = Math.min(webContents.getZoomFactor() + 0.1, 5);
+                            webContents.setZoomFactor(newZoomFactor);
+                        }
+                    }
+                },
+                {
+                    label: 'Zoom Out',
+                    accelerator: 'CmdOrCtrl+-',
+                    click: () => {
+                        const win = BrowserWindow.getFocusedWindow();
+                        if (win) {
+                            const webContents = win.webContents;
+                            const newZoomFactor = Math.max(webContents.getZoomFactor() - 0.1, 0.5);
+                            webContents.setZoomFactor(newZoomFactor);
+                        }
+                    }
+                },
+                {
+                    label: 'Reset Zoom',
+                    accelerator: 'CmdOrCtrl+0',
+                    click: () => {
+                        const win = BrowserWindow.getFocusedWindow();
+                        if (win) {
+                            win.webContents.setZoomFactor(1);
+                        }
+                    }
+                },
+                { type: 'separator' },
+                { role: 'reload' },
+                { role: 'forceReload' },
+                { role: 'toggleDevTools' },
+                { type: 'separator' },
+                { role: 'togglefullscreen' }
+            ]
+        }
+    ];
+    const menu = Menu.buildFromTemplate(menuTemplate);
+    Menu.setApplicationMenu(menu);
 
     app.on('activate', () => {
         if (BrowserWindow.getAllWindows().length === 0) {

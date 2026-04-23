@@ -6,7 +6,7 @@
   "type": "module",
   "private": true,
   "license": "MIT",
-  "version": "2026.4.14",
+  "version": "2026.4.23",
   "scripts": {
     "build": "nuxt generate",
     "dev": "nuxt dev",
@@ -15,7 +15,8 @@
     "postinstall": "nuxt prepare",
     "start": "electron-forge start",
     "package": "electron-forge package",
-    "make": "nuxt generate && electron-forge make"
+    "make": "nuxt generate && electron-forge make",
+    "publish": "electron-forge publish --targets @electron-forge/publisher-github"
   },
   "dependencies": {
     "@nuxt/eslint": "1.15.1",
