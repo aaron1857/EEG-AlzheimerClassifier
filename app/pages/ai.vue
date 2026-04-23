@@ -6,7 +6,7 @@
             <h1 class="w-full text-center font-bold text-2xl">UPLOAD EEG DATA</h1>
             <div class="flex flex-col items-center my-5 gap-3">
                 <UFileUpload v-model="selectedFile" accept=".csv" label="Drop File Here (max 20MB)" class="w-96 min-h-48" />
-                <SMButton size="2xl" text="SUBMIT" @click="submitCSV"/>
+                <WTButton size="2xl" text="SUBMIT" @click="submitCSV"/>
             </div>
         </div>
 
@@ -27,8 +27,8 @@
             <div class="h-96"></div>
             <!-- next steps buttons -->
             <div class="flex flex-row justify-center gap-3 delay-[2s] animate-window-fade-in">
-                <SMButton text="EXPORT RESULT"/>
-                <SMButton text="RESET" @click="reset"/>
+                <WTButton text="EXPORT RESULT"/>
+                <WTButton text="RESET" @click="reset"/>
             </div>
         </div>  
 
@@ -36,7 +36,7 @@
          <div v-else>
             <h1 class="w-full text-center font-bold text-2xl">ERROR</h1>
             <div class="flex flex-row justify-center">
-                <SMButton text="RESTART" @click="reset"/>
+                <WTButton text="RESTART" @click="reset"/>
             </div>
          </div>
     </div>
