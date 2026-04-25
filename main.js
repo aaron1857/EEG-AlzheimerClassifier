@@ -94,7 +94,7 @@ app.whenReady().then(async () => {
             let urlPath = request.url.replace('file://', '');
             urlPath = decodeURIComponent(urlPath);
             
-            if (urlPath.startsWith('/_nuxt/') || urlPath.startsWith('/_payload') || urlPath.startsWith('/_fonts') || urlPath.startsWith('/favicon')) {
+            if (urlPath.startsWith('/_nuxt/') || urlPath.startsWith('/_payload') || urlPath.startsWith('/_fonts') || urlPath.startsWith('/favicon') || urlPath.startsWith('/models')) {
                 const filePath = path.join(publicPath, urlPath);
                 callback({ path: filePath });
             } else if (urlPath.startsWith(publicPath)) {
