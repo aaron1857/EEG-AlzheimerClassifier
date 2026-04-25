@@ -13,7 +13,7 @@ export default defineNuxtConfig({
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { hid: 'description', name: 'description', content: 'An AI-powered B2B SaaS for detecting Alzheimer\'s Disease from EEG data.' },
+        { name: 'description', content: 'An AI-powered B2B SaaS for detecting Alzheimer\'s Disease from EEG data.' },
         { name: 'format-detection', content: 'telephone=no' }
       ],
       link: [
