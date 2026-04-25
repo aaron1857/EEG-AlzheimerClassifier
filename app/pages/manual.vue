@@ -30,7 +30,7 @@
                             <div class="flex-shrink-0 w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold">1</div>
                             <div>
                                 <h3 class="font-semibold text-lg">Prepare Your EEG Data</h3>
-                                <p class="opacity-75">Ensure your EEG data is in CSV format with proper electrode channel labels and time-series measurements in the international 10-20 system.</p>
+                                <p class="opacity-75">Ensure your EEG data is in CSV format with 19 channels and time-series measurements in the international 10-20 system.</p>
                             </div>
                         </div>
                         <div class="flex gap-4">
@@ -62,7 +62,7 @@
                         <UTable :data="fileRequirements" :columns="fileColumns" />
                         <UAlert color="warning" variant="subtle" icon="i-heroicons-exclamation-triangle">
                             <template #title>Important</template>
-                            <template #description>Ensure your CSV file follows the standard EEG format with electrode channels as columns and time points as rows.</template>
+                            <template #description>Ensure your CSV file follows the standard EEG format with electrode channels as columns and time points as rows. Headers should be removed before uploading.</template>
                         </UAlert>
                     </div>
                 </UCard>
@@ -126,40 +126,39 @@ const fileColumns = [
 const fileRequirements = [
     { property: 'File Format', requirement: 'CSV (Comma Separated Values)' },
     { property: 'Maximum Size', requirement: '20 MB' },
-    { property: 'Structure', requirement: 'Channels as columns, time points as rows' },
-    { property: 'Encoding', requirement: 'UTF-8' },
-    { property: 'Headers', requirement: 'Channel names in first row' }
+    { property: 'Structure', requirement: 'Exactly 19 channels (columns)' },
+    { property: 'Recording Length', requirement: 'Between 1 and 300 seconds (128 - 38,400 rows)' },
+    { property: 'Headers', requirement: 'None (Raw numeric values only)' }
 ]
 
 const faqs = [
     {
         label: 'What EEG format is supported?',
-        content: 'We support standard CSV format with electrode channels as columns and time-series data points as rows.',
+        content: 'We support standard CSV format with electrode channels as columns and time-series data points as rows. The recording frequency must be 128 Hz.',
+        icon: 'i-heroicons-chevron-down'
+    },
+    {
+        label: 'How does the voting system work?',
+        content: 'The recording is divided into 1-second chunks. Each chunk is analyzed independently. If at least 40% of the chunks show patterns associated with Alzheimer\'s, the overall result will indicate a risk.',
         icon: 'i-heroicons-chevron-down'
     },
     {
         label: 'How long does the analysis take?',
-        content: 'Processing time depends on the file size. Typically, analysis completes within 2-5 seconds for standard EEG recordings. You will see a loading indicator during processing.',
+        content: 'Processing time depends on the recording length. Typically, a 5-minute recording takes about 5-10 seconds to analyze.',
         icon: 'i-heroicons-chevron-down'
     },
     {
         label: 'What do the results mean?',
-        content: 'The results provide a classification indicating whether the EEG patterns are consistent with indicators of Alzheimer\'s Disease, along with a confidence percentage. This should be used as a screening tool only, not a diagnosis.',
+        content: 'The results provide a classification indicating whether the EEG patterns are consistent with indicators of Alzheimer\'s Disease. This should be used as a screening tool only, not a clinical diagnosis.',
         icon: 'i-heroicons-chevron-down'
-    },
-    {
-        label: 'Is my data kept private?',
-        content: 'Yes, all processing is done locally, and no data is stored permanently.',
-        icon: 'i-heroicons-chevron-down'
-    },
+    }
 ]
 
 const troubleshooting = [
     {
         problem: 'It keeps giving me an error!',
-        solution: 'Make sure your csv file is in the international 10-20 system for EEG data.'
+        solution: 'Check that your file has exactly 19 columns and no text headers. Ensure it contains at least 128 rows of data.'
     },
-    // We can add more here if we think of more
 ]
 
 const tips = [
@@ -170,8 +169,8 @@ const tips = [
     },
     {
         icon: 'i-heroicons-clock',
-        title: 'Adequate Recording Length',
-        description: 'Use recordings of at least 30 seconds to 5 minutes for best analysis accuracy.'
+        title: 'Optimal Length',
+        description: 'While we accept up to 300 seconds, recordings of 30-60 seconds are usually sufficient for a reliable analysis.'
     },
     {
         icon: 'i-heroicons-signal',

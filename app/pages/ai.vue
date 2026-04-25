@@ -22,7 +22,7 @@
         <div v-else-if="states[currState]=='results'">
             <h1 class="w-full text-center font-bold text-2xl">RESULTS</h1>
             <div class="w-full my-5 flex justify-center">
-                <ResultsWindow />
+                <ResultsWindow :results="finalResults" />
             </div>
             <div class="h-96"></div>
             <!-- next steps buttons -->
@@ -44,31 +44,29 @@
 
 <script setup lang="ts">
 import * as ort from 'onnxruntime-web'
-import * as Papa from 'papaparse'
 
 ort.env.wasm.wasmPaths = 'https://cdn.jsdelivr.net/npm/onnxruntime-web@1.24.3/dist/'
 
-const kilobyteSize = 1024
-const megabyteSize = 1024 * kilobyteSize
-const max_file_size = 20 * megabyteSize;
-
-
+const { validateFile, parseCSV } = useEEGValidation()
+const { applyPCA, CHANNELS, COMPONENTS } = usePCA()
 
 const states = ['upload', 'processing', 'results']
 const currState = ref(0)
 const selectedFile = ref<File | null>(null)
 const modelLoad = ref<Promise<ort.InferenceSession | undefined> | null>(null)
 const model = ref<ort.InferenceSession | undefined | null>(null)
-const dataLoad = ref<Promise<void> | null>(null)
-const data = ref<ort.Tensor>(new ort.Tensor('float32', [], [0]))
+const processedData = ref<Float32Array | null>(null)
+
+const finalResults = ref("Processing...")
 
 const loadModel = async () => {
     try {
         // Load model from a URL or relative path
-        const session = await ort.InferenceSession.create('./models/combined_pca_xgboost.onnx', {
+        const session = await ort.InferenceSession.create('./models/xgboost_model.onnx', {
             executionProviders: ['wasm'], // Options: 'wasm', 'webgl', 'webgpu'
         });
         console.log('Model loaded successfully');
+        console.log('Input metadata:', session.inputMetadata);
         return session;
     } catch (e) {
         console.error(`Failed to load model: ${e}`);
@@ -81,52 +79,75 @@ onMounted(async () => {
 })
 
 const submitCSV = async () => {
-    // validity checks
-    if (selectedFile.value == null) {
-        alert("Please upload a file.")
-        return;
+    const error = validateFile(selectedFile.value)
+    if (error) {
+        alert(error)
+        return
     }
-    if (selectedFile.value.size > max_file_size) {
-        alert("File too large. Please upload a smaller file.")
-        return;
-    }
-
-    dataLoad.value = new Promise<void>((resolve, reject) => {
-        Papa.parse(selectedFile.value, {
-            dynamicTyping: true, // Automatically converts numbers/booleans
-            complete: function(results: Papa.ParseResult<[]>) {
-                results.data.pop() //  Last element will always be null
-                const processed = new Float32Array(results.data.flat())
-                data.value = new ort.Tensor('float32', processed, [1,19,128])
-                console.log("Finished:", processed);
-                resolve()
-            },
-            error: function(err) {
-                console.error("Error parsing file:", err.message);
-                reject()
-            }
-    })})
-    // give file to model
-
 
     // next step
     currState.value++;
-    await calculateData()
+    
+    try {
+        processedData.value = await parseCSV(selectedFile.value!)
+        await calculateData();
+    } catch (e: any) {
+        console.error("Pipeline failed:", e);
+        alert(e.message || "An error occurred during processing.")
+        currState.value = 3; // Show error screen
+    }
 }
 
 const calculateData = async () => {
-  model.value = await modelLoad.value
-  await dataLoad.value
-  console.log(model.value?.inputMetadata)
-  console.log(data.value.size)
-  const results = await model.value?.run({ input: data.value })
-  console.log("Inference result:", results);
-  currState.value++
+    model.value = await modelLoad.value;
+    if (!model.value || !processedData.value) return;
 
+    try {
+        const pcaFeatures = applyPCA(processedData.value)
+        const numChunks = pcaFeatures.length
+
+        console.log(`Starting inference...`);
+
+        let atRiskVotes = 0;
+
+        for (let i = 0; i < numChunks; i++) {
+            const inputVector = pcaFeatures[i]!;
+            const tensor = new ort.Tensor('float32', inputVector, [1, CHANNELS * COMPONENTS]);
+            
+            const results = await model.value.run({ input: tensor });
+            
+            const firstOutput = Object.values(results)[0];
+            if (!firstOutput) continue;
+
+            const prediction = results.label ? Number(results.label.data[0]) : Number(firstOutput.data[0]);
+            
+            if (prediction !== 0) {
+                atRiskVotes++;
+            }
+        }
+
+        const atRiskRatio = atRiskVotes / numChunks;
+        console.log(`Inference complete. At-risk ratio: ${atRiskRatio.toFixed(2)} (${atRiskVotes}/${numChunks} chunks)`);
+
+        if (atRiskRatio >= 0.4) {
+            finalResults.value = "This patient is at risk for Alzheimer's Disease";
+        } else {
+            finalResults.value = "Low risk for Alzheimer's Disease detected";
+        }
+
+        currState.value++;
+    } catch (e: any) {
+        console.error("Calculation failed:", e)
+        alert(e.message || "An error occurred during calculation.")
+        throw e
+    }
 }
+
 
 const reset = () => {
     currState.value = 0;
     selectedFile.value = null;
+    processedData.value = null;
+    finalResults.value = "Processing...";
 }
 </script>
