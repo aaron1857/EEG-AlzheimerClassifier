@@ -65,7 +65,7 @@ const data = ref<ort.Tensor>(new ort.Tensor('float32', [], [0]))
 const loadModel = async () => {
     try {
         // Load model from a URL or relative path
-        const session = await ort.InferenceSession.create('./models/xgboost_model.onnx', {
+        const session = await ort.InferenceSession.create('./models/combined_pca_xgboost.onnx', {
             executionProviders: ['wasm'], // Options: 'wasm', 'webgl', 'webgpu'
         });
         console.log('Model loaded successfully');
