@@ -103,7 +103,7 @@ const calculateData = async () => {
     if (!model.value || !processedData.value) return;
 
     try {
-        const pcaFeatures = applyPCA(processedData.value)
+        const pcaFeatures = await applyPCA(processedData.value)
         const numChunks = pcaFeatures.length
 
         console.log(`Starting inference...`);

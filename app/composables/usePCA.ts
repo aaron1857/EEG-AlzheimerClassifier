@@ -1,20 +1,29 @@
-import { PCA } from 'ml-pca'
-
 export const usePCA = () => {
     const CHANNELS = 19
     const TIME_POINTS = 128
     const COMPONENTS = 10
     const CHUNK_SIZE = CHANNELS * TIME_POINTS
 
-    const applyPCA = (data: Float32Array): Float32Array[] => {
+    const applyPCA = async (data: Float32Array): Promise<Float32Array[]> => {
         const numChunks = Math.floor(data.length / CHUNK_SIZE)
         if (numChunks < 2) {
             throw new Error("Not enough data to perform PCA. Please upload a longer recording (at least 2 seconds).")
         }
 
-        console.log(`Starting PCA preprocessing on ${numChunks} chunks...`)
+        console.log(`Starting PCA preprocessing on ${numChunks} chunks using fixed parameters...`)
 
-        // 1. Reshape data into [numChunks, TIME_POINTS, CHANNELS]
+        // 1. Load PCA parameters
+        let pcaParams: any;
+        try {
+            const response = await fetch('/models/pca_parameters.json');
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            pcaParams = await response.json();
+        } catch (err) {
+            console.error("Failed to load PCA parameters:", err);
+            throw new Error("Critical error: PCA configuration could not be loaded.");
+        }
+
+        // 2. Reshape data into [numChunks, TIME_POINTS, CHANNELS]
         const reshapedData: Float32Array[][] = Array.from({ length: numChunks }, () => 
             Array.from({ length: TIME_POINTS }, () => new Float32Array(CHANNELS))
         )
@@ -30,29 +39,27 @@ export const usePCA = () => {
             }
         }
 
-        // 2. Apply PCA per channel
+        // 3. Apply Fixed PCA projection per channel
         const pcaFeatures: Float32Array[] = Array.from({ length: numChunks }, () => new Float32Array(CHANNELS * COMPONENTS))
 
         for (let c = 0; c < CHANNELS; c++) {
-            const channelData: number[][] = Array.from({ length: numChunks }, (_, i) => {
-                const row = new Float64Array(TIME_POINTS)
-                for (let t = 0; t < TIME_POINTS; t++) {
-                    row[t] = reshapedData[i]![t]![c]!
-                }
-                return Array.from(row)
-            })
-
-            const pca = new PCA(channelData)
-            const availableComponents = Math.min(pca.getEigenvalues().length, COMPONENTS)
-            const reduced = pca.predict(channelData, { nComponents: availableComponents })
-
+            const channelKey = `channel_${c + 1}`;
+            const { components, mean } = pcaParams[channelKey];
+            
             for (let i = 0; i < numChunks; i++) {
-                for (let pc = 0; pc < COMPONENTS; pc++) {
-                    if (pc < availableComponents) {
-                        pcaFeatures[i]![c * COMPONENTS + pc] = reduced.get(i, pc)
-                    } else {
-                        pcaFeatures[i]![c * COMPONENTS + pc] = 0
+                // Extract time series for this chunk and channel
+                const chunkChannelData = new Float32Array(TIME_POINTS);
+                for (let t = 0; t < TIME_POINTS; t++) {
+                    chunkChannelData[t] = reshapedData[i]![t]![c]!;
+                }
+
+                // Project onto each component: PC_j = sum_t (data_t - mean_t) * component_jt
+                for (let j = 0; j < COMPONENTS; j++) {
+                    let dotProduct = 0;
+                    for (let t = 0; t < TIME_POINTS; t++) {
+                        dotProduct += (chunkChannelData[t] - mean[t]) * components[j][t];
                     }
+                    pcaFeatures[i]![c * COMPONENTS + j] = dotProduct;
                 }
             }
         }
