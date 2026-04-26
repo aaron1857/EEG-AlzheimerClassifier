@@ -5,7 +5,7 @@
         <div v-if="states[currState]=='upload'">
             <h1 class="w-full text-center font-bold text-2xl">UPLOAD EEG DATA</h1>
             <div class="flex flex-col items-center my-5 gap-3">
-                <UFileUpload v-model="selectedFile" accept=".csv" label="Drop File Here (max 20MB)" class="w-96 min-h-48" />
+                <UFileUpload v-model="selectedFile" accept=".csv" label="Drop File Here (max 100MB)" class="w-96 min-h-48" />
                 <WTButton size="2xl" text="SUBMIT" @click="submitCSV"/>
             </div>
         </div>
