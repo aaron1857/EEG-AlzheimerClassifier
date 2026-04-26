@@ -3,7 +3,7 @@ import * as Papa from 'papaparse'
 export const useEEGValidation = () => {
     const kilobyteSize = 1024
     const megabyteSize = 1024 * kilobyteSize
-    const max_file_size = 20 * megabyteSize
+    const max_file_size = 100 * megabyteSize
 
     const validateFile = (file: File | null): string | null => {
         if (!file) {
