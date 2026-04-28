@@ -125,9 +125,9 @@ const fileColumns = [
 
 const fileRequirements = [
     { property: 'File Format', requirement: 'CSV (Comma Separated Values)' },
-    { property: 'Maximum Size', requirement: '20 MB' },
+    { property: 'Maximum Size', requirement: '100 MB' },
     { property: 'Structure', requirement: 'Exactly 19 channels (columns)' },
-    { property: 'Recording Length', requirement: 'Between 1 and 300 seconds (128 - 38,400 rows)' },
+    { property: 'Recording Length', requirement: 'Between 2 and 300 seconds (256 - 38,400 rows)' },
     { property: 'Headers', requirement: 'None (Raw numeric values only)' }
 ]
 
@@ -144,7 +144,7 @@ const faqs = [
     },
     {
         label: 'How long does the analysis take?',
-        content: 'Processing time depends on the recording length. Typically, a 5-minute recording takes about 5-10 seconds to analyze.',
+        content: 'Processing time depends on the recording length. However it should only take a few seconds at worst on most systems.',
         icon: 'i-heroicons-chevron-down'
     },
     {
