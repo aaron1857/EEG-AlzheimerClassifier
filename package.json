@@ -1,5 +1,5 @@
 {
-  "name": "Wavethinker",
+  "name": "WaveThinker",
   "author": "email101@duck.com",
   "description": "EEG Analysis Application",
   "main": "./main.js",
@@ -22,6 +22,7 @@
     "@nuxt/eslint": "1.15.1",
     "@nuxt/ui": "4.4.0",
     "electron-squirrel-startup": "^1.0.1",
+    "ml-pca": "^4.1.1",
     "nuxt": "^4.3.1",
     "onnxruntime-web": "^1.24.3",
     "papaparse": "^5.5.3",
