@@ -73,7 +73,7 @@ jobs:
           TAG_NAME: ${{ github.ref_name }}
         run: |
           # Create release
-          gh release create "$TAG_NAME" --title "Wavethinker $TAG_NAME" --generate-notes
+          gh release create "$TAG_NAME" --title "WaveThinker $TAG_NAME" --generate-notes
           
           # Upload all artifacts (find recursively)
           for file in $(find artifacts -type f); do

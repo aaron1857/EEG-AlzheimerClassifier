@@ -1,8 +1,8 @@
 <template>
     <div class="font-secondary">
         <div class="mx-auto py-10 px-6 overflow-y-auto">
-            <h1 class="text-4xl font-bold text-center mb-2">Wavethinker User Manual</h1>
-            <p class="text-center text-lg opacity-70 mb-10">Complete guide to using Wavethinker for EEG-based Alzheimer's detection</p>
+            <h1 class="text-4xl font-bold text-center mb-2">WaveThinker User Manual</h1>
+            <p class="text-center text-lg opacity-70 mb-10">Complete guide to using WaveThinker for EEG-based Alzheimer's detection</p>
 
             <div class="space-y-6">
                 <UCard>
@@ -13,7 +13,7 @@
                         </h2>
                     </template>
                     <div class="space-y-3">
-                        <p>Wavethinker is an open-source Machine Learning-powered tool that analyzes EEG data to detect patterns associated with Alzheimer's Disease.</p>
+                        <p>WaveThinker is an open-source Machine Learning-powered tool that analyzes EEG data to detect patterns associated with Alzheimer's Disease.</p>
                         <p>The system uses machine learning to examine brain wave signals and provide a classification result along with a confidence score.</p>
                     </div>
                 </UCard>
@@ -22,7 +22,7 @@
                     <template #header>
                         <h2 class="text-2xl font-bold flex items-center gap-2">
                             <UIcon name="i-heroicons-book-open" class="w-6 h-6" />
-                            How to use Wavethinker
+                            How to use WaveThinker
                         </h2>
                     </template>
                     <div class="space-y-4">

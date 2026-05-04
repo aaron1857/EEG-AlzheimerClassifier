@@ -18,8 +18,8 @@ export default {
     extraResource: [
       path.join(dirname, '.output')
     ],
-    name: 'Wavethinker',
-    executableName: 'Wavethinker',
+    name: 'WaveThinker',
+    executableName: 'WaveThinker',
     ignore: [
       /^\/\.git$/,
       /^\/\.gitignore$/,
@@ -55,8 +55,8 @@ export default {
       platforms: ['linux'],
       config: {
         options: {
-          name: 'Wavethinker',
-          bin: 'Wavethinker',
+          name: 'WaveThinker',
+          bin: 'WaveThinker',
           icon: './public/favicon.png'
         }
       },
